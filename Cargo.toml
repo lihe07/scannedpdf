@@ -6,11 +6,24 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+flate2 = { version = "1.0.25", optional = true }
 image = "0.24.5"
 
 [dev-dependencies]
 criterion = "0.4.0"
+printpdf = { version = "0.5.3", features = ["embedded_images"]}
 
 [[bench]]
 name = "basic"
 harness = false
+
+[features]
+default = ["flate2"]
+flate2 = ["dep:flate2"]
+
+# Always optimize image crate
+[profile.dev.package.image]
+opt-level = 3
+
+[profile.test.package.image]
+opt-level = 3

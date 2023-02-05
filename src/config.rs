@@ -1,45 +1,110 @@
+// All units are px
+
+#[derive(PartialEq)]
+pub enum PageSize {
+    A4,
+    Custom(u32, u32),
+    Image, // Same size as image
+}
+
+impl PageSize {
+    pub fn width(&self) -> u32 {
+        match self {
+            PageSize::A4 => 595,
+            PageSize::Custom(width, _) => *width,
+            PageSize::Image => 0,
+        }
+    }
+    pub fn height(&self) -> u32 {
+        match self {
+            PageSize::A4 => 842,
+            PageSize::Custom(_, height) => *height,
+            PageSize::Image => 0,
+        }
+    }
+    pub fn dimensions(&self) -> (u32, u32) {
+        (self.width(), self.height())
+    }
+}
+
+pub enum Margin {
+    None,
+    Vertical(u32),
+    Horizontal(u32),
+    Custom(u32, u32),
+}
+
+impl Margin {
+    pub fn dimensions(&self) -> (u32, u32) {
+        match self {
+            Margin::None => (0, 0),
+            Margin::Vertical(margin) => (0, *margin),
+            Margin::Horizontal(margin) => (*margin, 0),
+            Margin::Custom(width, height) => (*width, *height),
+        }
+    }
+    pub fn new(x: u32, y: u32) -> Self {
+        Margin::Custom(x, y)
+    }
+    pub fn vertical(margin: u32) -> Self {
+        Margin::Vertical(margin)
+    }
+    pub fn horizontal(margin: u32) -> Self {
+        Margin::Horizontal(margin)
+    }
+}
+
+pub enum Alignment {
+    Center,
+    Start,
+    End,
+    Custom(u32),
+}
+
 pub struct PageConfig {
-    width: f64,
-    height: f64,
-    dpi: f64
+    pub(crate) size: PageSize,
+    pub(crate) margin: Margin,
+    pub(crate) vertical_alignment: Alignment,
+    pub(crate) horizontal_alignment: Alignment,
+    pub(crate) quality: u8,
 }
 
 impl Default for PageConfig {
     fn default() -> Self {
         // Default size: A4
         PageConfig {
-            width,
-            dpi: 300.0
+            size: PageSize::A4,
+            margin: Margin::None,
+            vertical_alignment: Alignment::Center,
+            horizontal_alignment: Alignment::Center,
+            quality: 60,
         }
     }
 }
 
-pub struct Config {
-    default_page_config: PageConfig,
-    memory: bool
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Config {
-            default_page_config: PageConfig::default(),
-            memory: false
-        }
-    }
-}
-
-impl Config {
+impl PageConfig {
     pub fn new() -> Self {
-        Config::default()
+        Self::default()
     }
-
-    pub fn memory(mut self, memory: bool) -> Self {
-
+    pub fn size(mut self, size: PageSize) -> Self {
+        self.size = size;
+        self
+    }
+    pub fn vertical_alignment(mut self, alignment: Alignment) -> Self {
+        self.vertical_alignment = alignment;
+        self
+    }
+    pub fn horizontal_alignment(mut self, alignment: Alignment) -> Self {
+        self.horizontal_alignment = alignment;
+        self
+    }
+    pub fn margin(mut self, margin: Margin) -> Self {
+        self.margin = margin;
         self
     }
 
-    pub fn resize(mut self, resize: bool) -> Self {
-
+    pub fn quality(mut self, quality: u8) -> Self {
+        self.quality = quality;
         self
     }
 }
