@@ -23,8 +23,7 @@ fn images_to_pdf() {
 
     for path in images {
         println!("Adding page from {:?}", path);
-        file.add_page_from_path(path, None, Default::default())
-            .unwrap();
+        file.add_page_from_path(path, None, None).unwrap();
         println!("Page added");
     }
 
@@ -46,8 +45,7 @@ fn with_margin() {
 
     for path in images {
         println!("Adding page from {:?}", path);
-        file.add_page_from_path(path, None, Default::default())
-            .unwrap();
+        file.add_page_from_path(path, None, None).unwrap();
         println!("Page added");
     }
 
@@ -67,32 +65,11 @@ fn with_outlines() {
 
     let mut file = scannedpdf::create("./assets/outlines.pdf", config, images.len()).unwrap();
 
-    // for entry in std::fs::read_dir("./assets").unwrap() {
-    //     let entry = entry.unwrap();
-    //     if entry.file_name().into_string().unwrap().ends_with(".jpg") {
-    //         println!("Adding page from {:?}", entry.path());
-    //         file.add_page_from_path(
-    //             entry.path(),
-    //             Some(format!(
-    //                 "测试中文 图片 {}",
-    //                 entry.file_name().to_str().unwrap()
-    //             )),
-    //             Default::default(),
-    //         )
-    //         .unwrap();
-    //         println!("Page added");
-    //     }
-    // }
-
     let mut i = 1;
     for path in images {
         println!("Adding page from {:?}", path);
-        file.add_page_from_path(
-            path,
-            Some(format!("测试中文 图片 {}", i)),
-            Default::default(),
-        )
-        .unwrap();
+        file.add_page_from_path(path, Some(format!("测试中文 图片 {}", i)), None)
+            .unwrap();
         println!("Page added");
         i += 1;
     }

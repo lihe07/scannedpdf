@@ -11,7 +11,8 @@ fn encode_unicode_string(s: &str) -> Vec<u8> {
     encoded
 }
 
-// PDF related
+/// A PDF file
+///
 pub struct PDF<W: Write + Seek> {
     default_page_config: PageConfig,
     // writer: W,

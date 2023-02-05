@@ -1,10 +1,12 @@
 // All units are px
 
+/// Page size, default is A4
 #[derive(PartialEq)]
 pub enum PageSize {
     A4,
     Custom(u32, u32),
-    Image, // Same size as image
+    /// Same size as image
+    Image,
 }
 
 impl PageSize {
@@ -27,6 +29,7 @@ impl PageSize {
     }
 }
 
+/// Page margin, default is None
 pub enum Margin {
     None,
     Vertical(u32),
@@ -54,6 +57,7 @@ impl Margin {
     }
 }
 
+/// Alignment of the image
 pub enum Alignment {
     Center,
     Start,
@@ -61,6 +65,7 @@ pub enum Alignment {
     Custom(u32),
 }
 
+/// Config of a single page
 pub struct PageConfig {
     pub(crate) size: PageSize,
     pub(crate) margin: Margin,

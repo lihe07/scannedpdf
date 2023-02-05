@@ -2,16 +2,19 @@
 name = "scannedpdf"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["lihe07"]
+description = "A fast, low memory footprint, simple images to PDF crate"
+documentation = "https://docs.rs/scannedpdf"
+repository = "https://github.com/lihe07/scannedpdf"
+license = "Unlicensed"
 
 [dependencies]
-flate2 = { version = "1.0.25", optional = true }
-image = "0.24.5"
+flate2 = { version = "1.0", optional = true }
+image = "0.24"
 
 [dev-dependencies]
-criterion = "0.4.0"
-printpdf = { version = "0.5.3", features = ["embedded_images"]}
+criterion = "0.4"
+printpdf = { version = "0.5", features = ["embedded_images"]}
 
 [[bench]]
 name = "basic"
